@@ -1,23 +1,8 @@
 import java.io.*;
 import java.util.*;
 
-/**
- * This class implements a solver for the classic N-Puzzle Game
- *   originally completed for a problem on HackerRank
- *
- * The game board is read from System.in as a board size, k, followed by 
- * k*k space-separated integers.  These integers should be some permutation
- * of {0, 1, 2, ... k*k-1}.  The zero is interpreted as the empty space
- *
- * The output is a sequence of moves which will result in the shortest 
- * number of steps to a solved puzzle.  Note: each move refers to the 
- * direction in which "0" is moved
- */
 public class NPuzzle {
     
-    /**
-     * A class representing game state and associated information
-     */
     private class Board implements Comparable<Board> {
         public final int cost;
         public final int heur;
@@ -101,10 +86,9 @@ public class NPuzzle {
     }
 
     public static void main(String[] args) {
-        //Need this to instantiate copies of the inner class:
+        //workaround for inner class:
         Solution sol = new Solution();
         
-        //Read the board size and list of entries
         Scanner s = new Scanner(System.in);
         int k = s.nextInt();
         int[] arr = new int[k*k];
@@ -115,7 +99,8 @@ public class NPuzzle {
         }
         
         //now we have the initial board and the zero position
-        //we use A*-search to find the shortest move sequence to a solution
+        
+        
         Board solvedBoard = null;
         int solvedCost = Integer.MAX_VALUE;
         
@@ -134,7 +119,7 @@ public class NPuzzle {
                     solvedCost = tmp.getFinalCostEstimate();
                 }
             } else {
-                //queue states representing the results of possible actions 
+                //insert neighbors if they are not in the old set
                 if (tmp.zeropos - k >= 0) {
                     //insert "UP"
                     tmp2 = sol.new Board(tmp, tmp.zeropos, tmp.zeropos-k, "UP");
